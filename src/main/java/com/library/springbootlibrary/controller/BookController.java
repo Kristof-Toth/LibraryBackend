@@ -6,7 +6,7 @@ import com.library.springbootlibrary.utils.ExtractJWT;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-@CrossOrigin("https://localhost:3000")
+@CrossOrigin("http://localhost:3000")
 @RestController
 @RequestMapping("/api/books")
 @RequiredArgsConstructor
@@ -14,7 +14,7 @@ public class BookController {
 
     private final BookService bookService;
 
-    @GetMapping("/secure/currentloan/count")
+    @GetMapping("/secure/currentloans/count")
     public int currentLoansCount(@RequestHeader(value = "Authorization") String token) {
         String userEmail = ExtractJWT.payloadJWTExtraction(token, "\"sub\"");
         return bookService.currentLoansCount(userEmail);

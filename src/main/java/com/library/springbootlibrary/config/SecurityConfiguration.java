@@ -23,7 +23,7 @@ public class SecurityConfiguration {
                                         "/api/reviews/secure/**",
                                         "/api/messages/secure/**",
                                         "/api/admin/secure/**")
-                                .authenticated().anyRequest().permitAll())
+                                .authenticated())
                 .oauth2ResourceServer()
                 .jwt();
 

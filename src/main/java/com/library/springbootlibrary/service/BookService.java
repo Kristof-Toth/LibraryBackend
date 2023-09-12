@@ -2,8 +2,10 @@ package com.library.springbootlibrary.service;
 
 import com.library.springbootlibrary.dao.BookRepository;
 import com.library.springbootlibrary.dao.CheckoutRepository;
+import com.library.springbootlibrary.dao.HistoryRepository;
 import com.library.springbootlibrary.entity.Book;
 import com.library.springbootlibrary.entity.Checkout;
+import com.library.springbootlibrary.entity.History;
 import com.library.springbootlibrary.responsemodels.ShelfCurrentLoansResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -24,6 +26,7 @@ public class BookService {
 
     private final BookRepository bookRepository;
     private final CheckoutRepository checkoutRepository;
+    private final HistoryRepository historyRepository;
 
 
     public Book checkoutBook(String userEmail, Long bookId) throws Exception {
@@ -108,6 +111,18 @@ public class BookService {
 
         bookRepository.save(book.get());
         checkoutRepository.deleteById(checkout.getId());
+
+        History history = History.builder()
+                .userEmail(userEmail)
+                .checkoutDate(checkout.getCheckoutDate())
+                .returnedDate(LocalDate.now().toString())
+                .title(book.get().getTitle())
+                .author(book.get().getAuthor())
+                .description(book.get().getDescription())
+                .img(book.get().getImg())
+                .build();
+
+        historyRepository.save(history);
     }
 
     public void renewLoan(String userEmail, Long bookId) throws Exception {

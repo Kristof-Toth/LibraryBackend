@@ -27,7 +27,7 @@ public class MessagesController {
         String userEmail = ExtractJWT.payloadJWTExtraction(token, "\"sub\"");
         String admin = ExtractJWT.payloadJWTExtraction(token, "\"userType\"");
 
-        if (admin == null || "admin".equals(admin))
+        if (!"admin".equals(admin))
             throw new Exception("Administraton page only");
 
         messagesService.putMessage(adminQuestionRequest, userEmail);

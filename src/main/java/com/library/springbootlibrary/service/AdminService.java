@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 @RequiredArgsConstructor
 public class AdminService {
-    private BookRepository bookRepository;
+    private final BookRepository bookRepository;
 
     public void postBook(AddBookRequest addBookRequest) {
         Book book = Book.builder()

@@ -18,7 +18,7 @@ public class AdminController {
                          @RequestBody AddBookRequest addBookRequest) throws Exception {
         String admin = ExtractJWT.payloadJWTExtraction(token, "\"userType\"");
 
-        if ("admin".equals(admin))
+        if (!"admin".equals(admin))
             throw new Exception("Admin only page");
 
         adminService.postBook(addBookRequest);
